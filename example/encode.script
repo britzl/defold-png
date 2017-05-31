@@ -1,0 +1,19 @@
+function init(self)
+	-- generate some random pixel data for a 100x100 size image
+	math.randomseed(os.time())
+	local w = 100
+	local h = 100
+	local pixels = ""
+	for i=1,w*h*4 do
+		pixels = pixels .. string.char(math.random(1,255), math.random(1,255), math.random(1,255), 255)
+	end
+	
+	-- encode the pixel data to png format
+	local ps = png.encode_rgba(pixels, w, h)
+	
+	-- save to disk
+	local f = io.open("test.png", "wb")
+	f:write(ps)
+	f:flush()
+	f:close()
+end

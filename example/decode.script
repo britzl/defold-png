@@ -1,0 +1,33 @@
+local imgur = require "example.imgur"
+
+function init(self)
+	math.randomseed(os.time())
+
+	imgur.refresh(function(success)
+		if not success then
+			print("Unable to get images from Imgur")
+			return
+		end
+
+		local images = imgur.get_images()
+		if #images == 0 then
+			print("No images returned")
+			return
+		end
+
+		local image = images[math.random(1, #images)]
+		http.request(image.link, "GET", function(self, id, response)
+			if response.status == 200 or response.status == 304 then
+				local info = png.info(response.response)
+				pprint(info)
+
+				local buf, w, h = png.decode_rgba(response.response)
+				local resource_path = go.get("#sprite", "texture0")
+				local header = { width = w, height = h, type = resource.TEXTURE_TYPE_2D, format = resource.TEXTURE_FORMAT_RGBA, num_mip_maps = 1 }
+				resource.set_texture(resource_path, header, buf)
+			else
+				print("Error while downloading image. Response code", response.status)
+			end
+		end)
+	end)
+end
