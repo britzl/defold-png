@@ -132,14 +132,14 @@ static int ToBuffer(lua_State* L, LodePNGColorType type) {
  * Convert PNG to an RGB buffer
  */
 static int DecodeRGB(lua_State* L) {
-    return ToBuffer(L, RGB);
+    return ToBuffer(L, LCT_RGB);
 }
 
 /**
  * Convert PNG to an RGBA buffer
  */
 static int DecodeRGBA(lua_State* L) {
-    return ToBuffer(L, RGBA);
+    return ToBuffer(L, LCT_RGBA);
 }
 
 /**
