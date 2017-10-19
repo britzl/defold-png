@@ -1,14 +1,16 @@
 # defold-png
 Defold native extension to load and save PNG images using [lodepng](https://github.com/lvandeve/lodepng).
 
-# Installation
-You can use defold-png in your own project by adding this project as a Defold library dependency. Open your game.project file and in the dependencies field under project add:
+## Installation
+You can use defold-png in your own project by adding this project as a [Defold library dependency](https://www.defold.com/manuals/libraries/). Open your game.project file and in the dependencies field under project add:
 
 https://github.com/britzl/defold-png/archive/master.zip
 
-# Usage
+Or point to the ZIP file of a [specific release](https://github.com/britzl/defold-png/releases).
 
-__png.decode_rgba(bytes)__
+## Usage
+
+#### png.decode_rgba(bytes)
 
 Decode a PNG into a [Defold buffer](https://www.defold.com/ref/buffer/) containing the raw RGBA pixel data of the PNG. Once you have the buffer it's possible to get and manipulate the raw pixel data in Lua using `buffer.get_stream()` or set it as a texture on a sprite:
 
@@ -26,7 +28,7 @@ Decode a PNG into a [Defold buffer](https://www.defold.com/ref/buffer/) containi
 	resource.set_texture(resource_path, header, buf)
 ```
 
-__png.decode_rgb(bytes)__
+#### png.decode_rgb(bytes)
 
 Decode a PNG into a [Defold buffer](https://www.defold.com/ref/buffer/) containing the raw RGB pixel data of the PNG. Once you have the buffer it's possible to get and manipulate the raw pixel data in Lua using `buffer.get_stream()` or set it as a texture on a sprite:
 
@@ -44,7 +46,7 @@ Decode a PNG into a [Defold buffer](https://www.defold.com/ref/buffer/) containi
 	resource.set_texture(resource_path, header, buf)
 ```
 
-***png.info(bytes)***
+#### png.info(bytes)
 
 Read the PNG header and return information about the PNG.
 
@@ -60,7 +62,7 @@ Read the PNG header and return information about the PNG.
 	print(info.bitdepth)
 ```
 
-***png.encode_rgb(pixels, width, height)***
+#### png.encode_rgb(pixels, width, height)
 
 Encode raw RGB pixels to a PNG with the same color type.
 
@@ -80,7 +82,7 @@ Encode raw RGB pixels to a PNG with the same color type.
 	f:close()
 ```
 
-***png.encode_rgba(pixels, width, height)***
+#### png.encode_rgba(pixels, width, height)
 
 Encode raw RGBA pixels to a PNG with the same color type.
 
@@ -100,12 +102,17 @@ Encode raw RGBA pixels to a PNG with the same color type.
 	f:close()
 ```
 
-***png.RGB*** - Red, green and blue: rgb/truecolor
+#### png.RGB
+Red, green and blue: rgb/truecolor
 
-***png.RGBA*** - Red, green, blue and alpha
+#### png.RGBA
+Red, green, blue and alpha
 
-***png.GREY*** - Grayscale
+#### png.GREY
+Grayscale
 
-***png.GREY_ALPHA*** - Grayscale and alpha: level of opacity for each pixel
+#### png.GREY_ALPHA
+Grayscale and alpha: level of opacity for each pixel
 
-***png.PALETTE*** - Indexed: channel containing indices into a palette of colors
+#### png.PALETTE
+Indexed: channel containing indices into a palette of colors
