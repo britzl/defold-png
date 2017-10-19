@@ -92,9 +92,9 @@ static int ToBuffer(lua_State* L, LodePNGColorType type) {
     dmBuffer::HBuffer buffer;
     dmBuffer::StreamDeclaration streams_decl[] = {
     {
-        dmHashString64("pixels"), dmBuffer::VALUE_TYPE_UINT8, 1 }
+        dmHashString64("pixels"), dmBuffer::VALUE_TYPE_UINT8, bytes_per_pixel }
     };
-    dmBuffer::Result r = dmBuffer::Create(outw * outh * bytes_per_pixel, streams_decl, 1, &buffer);
+    dmBuffer::Result r = dmBuffer::Create(outw * outh, streams_decl, 1, &buffer);
     if (r == dmBuffer::RESULT_OK) {
         // copy pixels into buffer
         uint8_t* data = 0;
