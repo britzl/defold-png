@@ -10,9 +10,8 @@ Or point to the ZIP file of a [specific release](https://github.com/britzl/defol
 
 ## Usage
 
-#### png.decode_rgba(bytes)
-
-Decode a PNG into a [Defold buffer](https://www.defold.com/ref/buffer/) containing the raw RGBA pixel data of the PNG. Once you have the buffer it's possible to get and manipulate the raw pixel data in Lua using `buffer.get_stream()` or set it as a texture on a sprite:
+#### png.decode_rgba(bytes, premultiply_alpha)
+Decode a PNG into a [Defold buffer](https://www.defold.com/ref/buffer/) containing the raw RGBA pixel data of the PNG. If `premultiply_alpha` is true the alpha value of each pixel will be premultiplied into the RGB color values. This is needed when using the buffer to update a sprite texture or similar since the Defold engine uses premultiplied alpha internally. Once you have the buffer it's possible to get and manipulate the raw pixel data in Lua using `buffer.get_stream()` or set it as a texture on a sprite:
 
 ```
 	-- load a png from disk
@@ -20,7 +19,7 @@ Decode a PNG into a [Defold buffer](https://www.defold.com/ref/buffer/) containi
 	local bytes = f:read("*a")
 
 	-- decode the png to RGBA buffer
-	local buf, w, h = png.decode_rgba(bytes)
+	local buf, w, h = png.decode_rgba(bytes, true)
 
 	-- change the texture on a sprite to the loaded png
 	local resource_path = go.get("#sprite", "texture0")
@@ -29,7 +28,6 @@ Decode a PNG into a [Defold buffer](https://www.defold.com/ref/buffer/) containi
 ```
 
 #### png.decode_rgb(bytes)
-
 Decode a PNG into a [Defold buffer](https://www.defold.com/ref/buffer/) containing the raw RGB pixel data of the PNG. Once you have the buffer it's possible to get and manipulate the raw pixel data in Lua using `buffer.get_stream()` or set it as a texture on a sprite:
 
 ```
@@ -47,7 +45,6 @@ Decode a PNG into a [Defold buffer](https://www.defold.com/ref/buffer/) containi
 ```
 
 #### png.info(bytes)
-
 Read the PNG header and return information about the PNG.
 
 ```
@@ -63,7 +60,6 @@ Read the PNG header and return information about the PNG.
 ```
 
 #### png.encode_rgb(pixels, width, height)
-
 Encode raw RGB pixels to a PNG with the same color type.
 
 ```
@@ -83,7 +79,6 @@ Encode raw RGB pixels to a PNG with the same color type.
 ```
 
 #### png.encode_rgba(pixels, width, height)
-
 Encode raw RGBA pixels to a PNG with the same color type.
 
 ```

@@ -52,6 +52,7 @@ static int ToBuffer(lua_State* L, LodePNGColorType type) {
 
     size_t png_length;
     const char* png = luaL_checklstring(L, 1, &png_length);
+    int premultiply_alpha = lua_toboolean(L, 2);
 
     // decode png to pixels
     unsigned char* pixels = 0;
@@ -84,6 +85,29 @@ static int ToBuffer(lua_State* L, LodePNGColorType type) {
                 unsigned char byte2 = pixels[offset2 + bi];
                 pixels[offset1 + bi] = byte2;
                 pixels[offset2 + bi] = byte1;
+            }
+        }
+    }
+
+    // premultiply alpha
+    // TODO: can this be done efficiently while flipping?
+    if(premultiply_alpha == 1 && type == LCT_RGBA) {
+        int cx = outw / 2;
+        int cy = outh / 2;
+        for (int yi=0; yi < outh; yi++) {
+            for (int xi=0; xi < outw; xi++) {
+                unsigned int offset = (xi + (yi * outw)) * bytes_per_pixel;
+                unsigned char a = pixels[offset + 3];
+                if(a == 0) {
+                    pixels[offset + 0] = 0;
+                    pixels[offset + 1] = 0;
+                    pixels[offset + 2] = 0;
+                }
+                else if(a < 255) {
+                    pixels[offset + 0] = (unsigned short)pixels[offset + 0] * a >> 8;
+                    pixels[offset + 1] = (unsigned short)pixels[offset + 1] * a >> 8;
+                    pixels[offset + 2] = (unsigned short)pixels[offset + 2] * a >> 8;
+                }
             }
         }
     }
