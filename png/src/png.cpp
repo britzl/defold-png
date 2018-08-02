@@ -58,7 +58,7 @@ static int ToBuffer(lua_State* L, LodePNGColorType type) {
     unsigned char* pixels = 0;
     uint32_t outw = 0;
     uint32_t outh = 0;
-    uint32_t bytes_per_pixel;
+    uint8_t bytes_per_pixel;
     lodepng::State state;
     state.decoder.color_convert = 1;
     state.info_raw.bitdepth = 8;
