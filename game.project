@@ -1,6 +1,6 @@
 [project]
 title = PNG
-dependencies =
+dependencies = 
 
 [bootstrap]
 main_collection = /example/example.collectionc
@@ -18,3 +18,7 @@ shared_state = 1
 
 [library]
 include_dirs = png
+
+[native_extension]
+app_manifest = /generated.appmanifest
+

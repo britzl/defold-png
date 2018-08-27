@@ -1,0 +1,53 @@
+# App manifest generated Mon Aug 27 2018 06:02:45 GMT+0200 (Central European Summer Time)
+# Settings: Debug,Clang
+platforms:
+    x86_64-osx:
+        context:
+            excludeLibs: ["engine"]
+            excludeSymbols: []
+            libs: ["engine"]
+
+    x86_64-linux:
+        context:
+            excludeLibs: ["engine"]
+            excludeSymbols: []
+            libs: ["engine"]
+
+    js-web:
+        context:
+            excludeLibs: ["engine"]
+            excludeSymbols: []
+            libs: ["engine"]
+
+    x86-win32:
+        context:
+            excludeLibs: ["libengine"]
+            excludeSymbols: []
+            libs: ["libengine.lib"]
+            use-clang: true
+
+    x86_64-win32:
+        context:
+            excludeLibs: ["libengine"]
+            excludeSymbols: []
+            libs: ["libengine.lib"]
+            use-clang: true
+
+    armv7-android:
+        context:
+            excludeLibs: ["engine"]
+            excludeSymbols: []
+            libs: ["engine"]
+
+    armv7-ios:
+        context:
+            excludeLibs: ["engine"]
+            excludeSymbols: []
+            libs: ["engine"]
+
+    arm64-ios:
+        context:
+            excludeLibs: ["engine"]
+            excludeSymbols: []
+            libs: ["engine"]
+
