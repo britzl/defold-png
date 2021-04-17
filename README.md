@@ -35,8 +35,8 @@ Decode a PNG into a [Defold buffer](https://www.defold.com/ref/buffer/) containi
 	local f = io.open("my.png", "rb")
 	local bytes = f:read("*a")
 
-	-- decode the png to RGBA buffer
-	local buf, w, h = png.decode_rgba(bytes)
+	-- decode the png to RGB buffer
+	local buf, w, h = png.decode_rgb(bytes)
 
 	-- change the texture on a sprite to the loaded png
 	local resource_path = go.get("#sprite", "texture0")
