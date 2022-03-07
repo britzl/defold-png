@@ -129,7 +129,7 @@ static int ToBuffer(lua_State* L, LodePNGColorType type) {
 
         // validate and return
         if (dmBuffer::ValidateBuffer(buffer) == dmBuffer::RESULT_OK) {
-            dmScript::LuaHBuffer luabuffer = { buffer, true };
+            dmScript::LuaHBuffer luabuffer(buffer, dmScript::OWNER_LUA);
             dmScript::PushBuffer(L, luabuffer);
             lua_pushnumber(L, outw);
             lua_pushnumber(L, outh);
