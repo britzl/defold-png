@@ -5,7 +5,7 @@ local client_id = "0166969aba5f28b"
 local images = {}
 
 function M.refresh(callback)
-	local cache_path = sys.get_save_file(sys.get_config("project.title"), "imgurcache")
+	local cache_path = sys.get_save_file(sys.get_config_string("project.title"), "imgurcache")
 	local cache = sys.load(cache_path) or {}
 
 	local headers = {
