@@ -1,0 +1,133 @@
+---@meta
+---@diagnostic disable: lowercase-global
+---@diagnostic disable: missing-return
+---@diagnostic disable: args-after-dots
+
+---@class defold_api.png
+---@field RGB integer Red, green, and blue: rgb/truecolor (=2)
+---@field RGBA integer Red, green, blue, and alpha (=6)
+---@field GREY integer Grayscale (=0)
+---@field GREY_ALPHA integer Grayscale and alpha: level of opacity for each pixel (=4)
+---@field PALETTE integer Indexed: channel containing indices into a palette of colors (=3)
+---Defold native extension to load and save PNG images using 'lodepng'.
+png = {}
+
+---@class defold_api.png.info_result
+---@field bytes string Lua string of PNG bytes
+---@field width integer Width of the image
+---@field height integer Height of the image
+---@field colortype integer Color type (0 = grayscale, 2 = RGB, 3 = palette, 4 = grayscale and alpha, 6 = RGBA)
+---@field bitdepth integer Bits per channel (1, 2, 4, 8, or 16)
+
+---Decode a PNG into a Defold buffer containing the raw RGBA pixel data of the
+---PNG. If 'premultiply_alpha' is 'true' the alpha value of each pixel will be
+---premultiplied into the RGB color values. This is needed when using the buffer
+---to update a sprite texture or similar since the Defold engine uses
+---premultiplied alpha internally. Once you have the buffer it's possible to get
+---and manipulate the raw pixel data in Lua using 'buffer.get_stream()' or set
+---it as a texture on a sprite:
+---```
+---  -- load a png from disk
+---  local f = io.open("my.png", "rb")
+---  local bytes = f:read("*a")
+---
+---  -- decode the png to RGBA buffer
+---  local buf, w, h = png.decode_rgba(bytes, true)
+---
+---  -- change the texture on a sprite to the loaded png
+---  local resource_path = go.get("#sprite", "texture0")
+---  local header = { width = w, height = h, type = resource.TEXTURE_TYPE_2D, format = resource.TEXTURE_FORMAT_RGBA, num_mip_maps = 1 }
+---  resource.set_texture(resource_path, header, buf)
+---```
+---@param bytes string Lua string of PNG bytes to decode
+---@param premultiply_alpha boolean Whether to premultiply alpha into RGB
+---@return userdata buffer The decoded image as a Defold buffer
+---@return integer width Width of the decoded image in pixels
+---@return integer height Height of the decoded image in pixels
+function png.decode_rgba(bytes, premultiply_alpha) end
+
+---Decode a PNG into a Defold buffer containing the raw RGB pixel data of the
+---PNG. Once you have the buffer it's possible to get and manipulate the raw
+---pixel data in Lua using 'buffer.get_stream()' or set it as a texture on a
+---sprite:
+---```
+---  -- load a png from disk
+---  local f = io.open("my.png", "rb")
+---  local bytes = f:read("*a")
+---
+---  -- decode the png to RGB buffer
+---  local buf, w, h = png.decode_rgb(bytes)
+---
+---  -- change the texture on a sprite to the loaded png
+---  local resource_path = go.get("#sprite", "texture0")
+---  local header = { width = w, height = h, type = resource.TEXTURE_TYPE_2D, format = resource.TEXTURE_FORMAT_RGB, num_mip_maps = 1 }
+---  resource.set_texture(resource_path, header, buf)
+---```
+---@param bytes string Lua string of PNG bytes to decode
+---@return userdata buffer The decoded image as a Defold buffer
+---@return integer width Width of the decoded image in pixels
+---@return integer height Height of the decoded image in pixels
+function png.decode_rgb(bytes) end
+
+---Read the PNG header and return information about the PNG.
+--- Example:
+---```
+---  -- load a png from disk
+---  local f = io.open("my.png", "rb")
+---  local bytes = f:read("*a")
+---
+---  local info = png.info(bytes)
+---  print(info.width)
+---  print(info.height)
+---  print(info.colortype)
+---  print(info.bitdepth)
+---```
+---@param bytes string Lua string of PNG bytes containing the header
+---@return defold_api.png.info_result result A table containing the information about the PNG
+function png.info(bytes) end
+
+---Encode raw RGB pixels to a PNG with the same color type.
+--- Example:
+---```
+---  -- create 100x100 red pixels
+---  local w = 100
+---  local h = 100
+---  local pixels = string.rep(string.char(255,0,0), w * h)
+---
+---  -- encode
+---  local bytes = png.encode_rgb(pixels, w, h)
+---
+---  -- save png to file
+---  local f = io.open("my.png", "wb")
+---  f:write(bytes)
+---  f:flush()
+---  f:close()
+---```
+---@param pixels string String of characters representing 'string.char(<red>, <green>, <blue>)' with integers in the range 0-255
+---@param width integer Width of the image to encode in pixels
+---@param height integer Height of the image to encode in pixels
+---@return string bytes Lua string of encoded PNG bytes
+function png.encode_rgb(pixels, width, height) end
+
+---Encode raw RGBA pixels to a PNG with the same color type.
+--- Example:
+---```
+---  -- create 100x100 red pixels with 50% transparency
+---  local w = 100
+---  local h = 100
+---  local pixels = string.rep(string.char(255,0,0, 128), w * h)
+---
+---  -- encode
+---  local bytes = png.encode_rgba(pixels, w, h)
+---
+---  -- save png to file
+---  local f = io.open("my.png", "wb")
+---  f:write(bytes)
+---  f:flush()
+---  f:close()
+---```
+---@param pixels string String of characters representing 'string.char(<red>, <green>, <blue>, <alpha>)' with integers in the range 0-255
+---@param width integer Width of the image to encode in pixels
+---@param height integer Height of the image to encode in pixels
+---@return string bytes Lua string of encoded PNG bytes
+function png.encode_rgba(pixels, width, height) end
